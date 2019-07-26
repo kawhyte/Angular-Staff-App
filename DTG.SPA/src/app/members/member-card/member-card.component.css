@@ -1,0 +1,40 @@
+
+.panel-image {
+  overflow: hidden;
+  position: relative;
+}
+
+
+img {
+  width: 200px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* 
+.example-header-image {
+  background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+  background-size: cover;
+} */
+
+
+.example-card {
+  max-width: 300px;
+}
+
+.example-header-image {
+  background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+  background-size: cover;
+}
+
+.title {
+  color: #2b2b2b;
+  width: 100%;
+  float: left;
+  line-height: 20px;
+  font-size: 17px;
+  font-weight: 100;
+  letter-spacing: 2px;
+  position: relative;
+}

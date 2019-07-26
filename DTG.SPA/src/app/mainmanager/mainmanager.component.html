@@ -1,0 +1,52 @@
+
+<app-nav></app-nav>
+
+<mat-drawer-container class="app-sidenav-container" autosize  >
+  <mat-drawer #drawer class="app-sidenav mat-elevation-z10" [opened]="!isScreenSmall()" [mode]=" isScreenSmall() ? 'over' : 'side'"
+  *ngIf="loggedIn()"
+  >
+    <mat-toolbar>
+     <h2>Dashboard</h2> 
+    </mat-toolbar>
+
+    <mat-nav-list role="list" >
+      <mat-list-item role="listitem" [routerLink]="['/members']">
+        <mat-icon mat-list-icon>people</mat-icon>  
+       <h4 mat-line>Employees</h4>
+      </mat-list-item>
+
+      <mat-list-item role="listitem" [routerLink]="['/vehicles/new']">
+        <mat-icon mat-list-icon>people</mat-icon>  
+       <h4 mat-line>Add a project </h4>
+      </mat-list-item>
+
+      <mat-list-item role="listitem" [routerLink]="['/list']">
+        <mat-icon mat-list-icon>group_add</mat-icon>  
+       <h4 mat-line>Favorites</h4>
+      </mat-list-item>
+
+      <mat-list-item role="listitem" [routerLink]="['/messages']">
+        <mat-icon mat-list-icon>mail_outline</mat-icon>  
+       <h4 mat-line>Mail</h4>
+      </mat-list-item>
+
+      <!-- <mat-divider></mat-divider> -->
+
+    </mat-nav-list>
+
+  </mat-drawer>
+
+
+  <!-- <div class="app-sidenav-content">
+    <button type="button" class="button button3" mat-button (click)="drawer.toggle()">
+     Toggle Test
+    </button>
+    
+
+  </div> -->
+
+  <router-outlet></router-outlet>
+
+</mat-drawer-container>
+
+

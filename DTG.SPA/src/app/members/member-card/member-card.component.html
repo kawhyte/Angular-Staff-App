@@ -1,0 +1,70 @@
+<mat-card class="example-card">
+  <mat-card-header>
+    <!-- <div mat-card-avatar class="example-header-image"></div> -->
+    <mat-card-title class="title"> {{user.firstName}} A. {{user.lastName}}</mat-card-title>
+    <mat-card-subtitle>{{user.currentRole}}</mat-card-subtitle>
+  </mat-card-header>
+
+  <img mat-card-image src="{{user.photoUrl ? user.photoUrl : '../../../assets/user.png'}}" alt="{{user.knownAs}}">
+  <!-- <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"> -->
+
+
+  <mat-card-content>
+    <!-- Years at Google: {{user.age}} -->
+    <!-- <p>Contact: {{user.contact}}</p> -->
+    <!-- <p>{{user.email}}</p> -->
+    <p> Email: {{email}}</p>
+    <p> Office Tel: {{telephoneNumber}}</p>
+    <p>Ext: {{extension}}</p>
+  </mat-card-content>
+  <mat-divider></mat-divider>
+  <mat-card-actions fxLayout="row" fxLayoutAlign="space-around center">
+
+    <span matTooltip="Employee Profile">
+      <mat-list-item role="listitem" [routerLink]="['/members/', user.id]">
+        <mat-icon mat-list-icon>person_pin</mat-icon>
+      </mat-list-item>
+    </span>
+    
+    <span matTooltip="Add to Favorite">
+      <mat-list-item role="listitem" (click)="sendLike(user.id)">
+        <mat-icon mat-list-icon>person_add</mat-icon>
+      </mat-list-item>
+    </span>
+   
+    <span matTooltip="Private Messages">
+      <mat-list-item role="listitem" [routerLink]="['/members/', user.id]" [queryParams]="{tab :'3'}">
+        <mat-icon mat-list-icon>mail</mat-icon>
+      </mat-list-item>
+    </span>
+  </mat-card-actions>
+
+
+</mat-card>
+
+
+
+
+
+
+
+
+
+<!-- <div class="panel panel-default">
+  <div class="panel-body">
+    <div class="panel-image">
+      <img src="{{user.photoUrl ? user.photoUrl : '../../../assets/user.png'}}" alt="{{user.knownAs}}" >
+      <ul class="list-inline member-icons animate text-center">
+        <li><button class="btn btn-primary" [routerLink]="['/members/', user.id]"><i class="fa fa-user"></i></button></li>
+        <li><button class="btn btn-primary" (click)= "sendLike(user.id)"><i class="fa fa-heart"></i></button></li>
+        <li><button class="btn btn-primary"[routerLink]="['/members/', user.id]" [queryParams] = "{tab :'3'}"  ><i class="fa fa-envelope"></i></button></li>
+      </ul>
+    </div>
+    <div class="text-center">
+      <h5><i class="fa fa-user"></i> {{user.knownAs}}, {{user.age}}</h5>
+    </div>
+    <div class="text-center">
+      <h5><small>{{user.city}}</small></h5>
+    </div>
+  </div>
+</div> -->
