@@ -17,7 +17,7 @@
           "ASPNETCORE_ENVIRONMENT": "Development"
         }
       },
-      "DTG.API": {
+      "DatingApp.API": {
         "commandName": "Project",
         "launchBrowser": false,
         "launchUrl": "api/values",

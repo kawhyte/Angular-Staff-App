@@ -21,6 +21,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Mvc;
 
+
 namespace DTG.API
 {
     public class Startup
@@ -41,7 +42,10 @@ namespace DTG.API
                .GetConnectionString("DefaultConnection"))
                .ConfigureWarnings(warnings => warnings.Ignore(CoreEventId.IncludeIgnoredWarning))
                );
-
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1).AddJsonOptions(opt =>
+           {
+               opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+           });
             services.AddMvc();
             services.AddTransient<Seed>();
             services.AddCors();
@@ -60,10 +64,7 @@ namespace DTG.API
                 };
 
             });
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1).AddJsonOptions(opt =>
-           {
-               opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
-           });
+            
 
            services.AddScoped<LogUserActivity>();
         }
@@ -95,7 +96,7 @@ namespace DTG.API
                 });
 
             }
-            seeder.SeedUsers();
+           //seeder.SeedUsers();
             app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin().AllowCredentials());
             app.UseAuthentication();
             app.UseMvc();

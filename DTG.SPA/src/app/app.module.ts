@@ -41,7 +41,6 @@ import { FlexLayoutModule } from "@angular/flex-layout";
 import { MainmanagerComponent } from "./mainmanager/mainmanager.component";
 import { SignInDialogComponent } from "./sign-in-dialog/sign-in-dialog.component";
 import { RegisterDialogComponent } from './register-dialog/register-dialog.component';
-import { VehicleFormComponent } from './vehicle-form/vehicle-form.component';
 
 @NgModule({
   declarations: [
@@ -60,8 +59,7 @@ import { VehicleFormComponent } from './vehicle-form/vehicle-form.component';
     MemberMessagesComponent,
     MainmanagerComponent,
     SignInDialogComponent,
-    RegisterDialogComponent,
-    VehicleFormComponent
+    RegisterDialogComponent
 ],
   imports: [
     BrowserModule,

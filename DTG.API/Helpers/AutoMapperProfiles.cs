@@ -1,6 +1,5 @@
 using System.Linq;
 using AutoMapper;
-using DTG.API.Controllers.Reources;
 using DTG.API.Dtos;
 using DTG.API.Models;
 
@@ -45,17 +44,6 @@ namespace DTG.API.Helpers
             opt.MapFrom( u => u.Recipient.Photos.FirstOrDefault(p => p.IsMain).Url));
 
  
-
-//// Mapping ////
-
-            CreateMap<Make, MakeResource>();
-            CreateMap<Model, ModelResource>();
-            CreateMap<Feature, FeatureResource>();
-
-
-
-
-
         }
     }
 }

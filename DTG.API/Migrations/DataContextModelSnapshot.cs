@@ -41,20 +41,6 @@ namespace DTG.API.Migrations
                     b.ToTable("Contact");
                 });
 
-            modelBuilder.Entity("DTG.API.Models.Feature", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(255);
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Features");
-                });
-
             modelBuilder.Entity("DTG.API.Models.Like", b =>
                 {
                     b.Property<int>("LikerId");
@@ -66,20 +52,6 @@ namespace DTG.API.Migrations
                     b.HasIndex("LikeeId");
 
                     b.ToTable("Likes");
-                });
-
-            modelBuilder.Entity("DTG.API.Models.Make", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(255);
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Makes");
                 });
 
             modelBuilder.Entity("DTG.API.Models.Message", b =>
@@ -110,24 +82,6 @@ namespace DTG.API.Migrations
                     b.HasIndex("SenderId");
 
                     b.ToTable("Messages");
-                });
-
-            modelBuilder.Entity("DTG.API.Models.Model", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("MakeId");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(255);
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("MakeId");
-
-                    b.ToTable("Models");
                 });
 
             modelBuilder.Entity("DTG.API.Models.Photo", b =>
@@ -251,14 +205,6 @@ namespace DTG.API.Migrations
                         .WithMany("MessagesSent")
                         .HasForeignKey("SenderId")
                         .OnDelete(DeleteBehavior.Restrict);
-                });
-
-            modelBuilder.Entity("DTG.API.Models.Model", b =>
-                {
-                    b.HasOne("DTG.API.Models.Make", "Make")
-                        .WithMany("Models")
-                        .HasForeignKey("MakeId")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("DTG.API.Models.Photo", b =>
