@@ -30,23 +30,9 @@ export class RegisterComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    // this.bsConfig = {
-    //   containerClass: "theme-dark-blue"
-    // };
 
     this.createRegisterForm();
-    // this.registerForm = new FormGroup(
-    //   {
-    //     username: new FormControl("", Validators.required),
-    //     password: new FormControl("", [
-    //       Validators.required,
-    //       Validators.minLength(4),
-    //       Validators.maxLength(8)
-    //     ]),
-    //     confirmPassword: new FormControl("", Validators.required)
-    //   },
-    //   this.passwordMatchValidator
-    // );
+
   }
 
   createRegisterForm() {

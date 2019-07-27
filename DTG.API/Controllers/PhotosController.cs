@@ -1,187 +1,88 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
-using CloudinaryDotNet;
-using CloudinaryDotNet.Actions;
+using DTG.API.Controllers.Reources;
 using DTG.API.Data;
-using DTG.API.Dtos;
-using DTG.API.Helpers;
 using DTG.API.Models;
-using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
 
 namespace DTG.API.Controllers
 {
-    [Authorize]
-    [Route("api/users/{userId}/photos")]
 
-    public class PhotosController : Controller
+
+[Route("/api/vehicles/{vehicleId}/photos")]
+  public class PhotosController : Controller
+  {
+    private readonly int MAX_BYTES = 1 * 1024 * 1024;
+    private readonly string[] ACCEPTED_FILE_TYPES = new[] { ".jpg", ".jpeg", ".png" };
+    private readonly IHostingEnvironment host;
+    private readonly IVehicleRepository repository;
+    private readonly IUnitOfWork unitOfWork;
+    private readonly IMapper mapper;
+    private readonly IVehiclePhotoRepository vehiclePhotoRepository;
+    public PhotosController(IVehiclePhotoRepository vehiclePhotoRepository, IHostingEnvironment host, IVehicleRepository repository, IUnitOfWork unitOfWork, IMapper mapper)
     {
+      this.mapper = mapper;
+      this.unitOfWork = unitOfWork;
+      this.repository = repository;
+      this.host = host;
+      this.vehiclePhotoRepository = vehiclePhotoRepository;
+    }
+    [HttpPost]
+    public async Task<IActionResult> Upload(int vehicleId, IFormFile file)
+    {
+      var vehicle = await repository.GetVehicle(vehicleId, includeRelated: false);
+      if (vehicle == null)
+        return NotFound();
 
-        private readonly IDatingRepository _repo;
-        private readonly IMapper _mapper;
-        private readonly IOptions<CloudinarySettings> _cloudinaryconfig;
-        private Cloudinary _cloudinary;
+   if (string.IsNullOrWhiteSpace(host.WebRootPath))
+   {
+       host.WebRootPath = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
+   }
+  
 
-        public PhotosController(IDatingRepository repo, IMapper mapper, IOptions<CloudinarySettings> cloudinaryconfig)
-        {
-            _repo = repo;
-            _mapper = mapper;
-            _cloudinaryconfig = cloudinaryconfig;
-            Account cloudinaryAccount = new Account(
-                _cloudinaryconfig.Value.CloudName,
-                _cloudinaryconfig.Value.ApiKey,
-                _cloudinaryconfig.Value.ApiSecret
-            );
-            _cloudinary = new Cloudinary(cloudinaryAccount);
-        }
+      if (file == null) return BadRequest("Null file");
+      if (file.Length == 0) return BadRequest("Empty file");
+      if (file.Length > MAX_BYTES) return BadRequest("Max file size exceeded");
+      if (!ACCEPTED_FILE_TYPES.Any(s => s == Path.GetExtension(file.FileName))) return BadRequest("Invalid file type.");
 
-
-        [HttpGet("{id}", Name = "GetPhoto")]
-        public async Task<IActionResult> GetPhoto(int id)
-        {
-
-            var photoFromRepo = await _repo.GetPhoto(id);
-
-            var photo = _mapper.Map<PhotoForReturnDto>(photoFromRepo);
-
-            return Ok(photo);
-        }
+      var uploadsFolderPath =  Path.Combine( host.WebRootPath, "uploads");
+  
 
 
+      if (!Directory.Exists(uploadsFolderPath))
+        Directory.CreateDirectory(uploadsFolderPath);
 
-        [HttpPost]
-        public async Task<IActionResult> AddPhotoForUser(int userId, PhotoForCreationDto photoDto)
-        {
-            var user = await _repo.GetUser(userId);
+      var fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+      var filePath = Path.Combine(uploadsFolderPath, fileName);
 
-            if (user == null)
-                return BadRequest("Could not find user");
+      using (var stream = new FileStream(filePath, FileMode.Create))
+      {
+        await file.CopyToAsync(stream);
+      }
 
+      var photo = new VehiclePhoto { FileName = fileName };
+      vehicle.VehiclePhotos.Add(photo);
+      await unitOfWork.CompleteAsync();
 
-            var currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-
-
-            if (currentUserId != user.Id)
-                return Unauthorized();
-
-            var file = photoDto.File;
-            var uploadResult = new ImageUploadResult();
-
-            if (file.Length > 0)
-            {
-
-                using (var stream = file.OpenReadStream())
-                {
-
-                    var uploadParams = new ImageUploadParams()
-                    {
-
-                        File = new FileDescription(file.Name, stream),
-                        Transformation = new Transformation().Width(500).Height(500).Crop("fill").Gravity("face")
-                    };
-
-                    uploadResult = _cloudinary.Upload(uploadParams);
-                }
-            }
-
-            photoDto.Url = uploadResult.Uri.ToString();
-            photoDto.PublicId = uploadResult.PublicId;
-
-            var photo = _mapper.Map<Photo>(photoDto);
-
-            photo.User = user;
-
-            if (!user.Photos.Any(m => m.IsMain))
-                photo.IsMain = true;
-
-            user.Photos.Add(photo);
+      return Ok(mapper.Map<VehiclePhoto, VehiclePhotoResource>(photo));
+    }
+ 
 
 
-
-            if (await _repo.SaveAll())
-            {
-                var photoToReturn = _mapper.Map<PhotoForReturnDto>(photo);
-                return CreatedAtRoute("GetPhoto", new { id = photo.Id }, photoToReturn);
-            }
-
-            return BadRequest("Could not add the photo");
-        }
-
-        [HttpPost("{id}/setMain")]
-        public async Task<IActionResult> SetMainPhoto(int userId, int id)
-        {
-
-            if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
-                return Unauthorized();
-
-
-            var photoFromRepo = await _repo.GetPhoto(id);
-
-            if (photoFromRepo == null)
-                return NotFound();
-
-            if (photoFromRepo.IsMain)
-                return BadRequest("Already Main Photo");
-
-
-            var currentMainPhoto = await _repo.GetMainPhotoForUser(userId);
-
-            if (currentMainPhoto != null)
-                currentMainPhoto.IsMain = false;
-
-            photoFromRepo.IsMain = true;
-
-            if (await _repo.SaveAll())
-                return NoContent();
-
-
-            return BadRequest("Could not set photo to main");
-
-
-        }
-
-
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeletePhoto(int userId, int id)
-        {
-
-            if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
-                return Unauthorized();
-
-
-            var photoFromRepo = await _repo.GetPhoto(id);
-
-            if (photoFromRepo == null)
-                return NotFound();
-
-            if (photoFromRepo.IsMain)
-                return BadRequest("Cannot Delete Main Photo");
-
-            if (photoFromRepo.PublicId != null)
-            {
-                var deleteParams = new DeletionParams(photoFromRepo.PublicId);
-                var result = _cloudinary.Destroy(deleteParams);
-
-                if (result.Result == "ok")
-                    _repo.Delete(photoFromRepo);
-            }
-
-            if (photoFromRepo.PublicId == null)
-            {
-                _repo.Delete(photoFromRepo);
-            }
-
-            if (await _repo.SaveAll())
-                return Ok();
-
-
-            return BadRequest("Delete failed");
-        }
-
-
+  [HttpGet]
+    public async Task<IEnumerable<VehiclePhotoResource>> GetPhotos(int vehicleId) 
+    {
+      var photos = await vehiclePhotoRepository.GetPhotos(vehicleId);
+      
+      return mapper.Map<IEnumerable<VehiclePhoto>, IEnumerable<VehiclePhotoResource>>(photos);
     }
 
+  }
+        
 }

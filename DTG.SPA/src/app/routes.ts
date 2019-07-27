@@ -1,3 +1,4 @@
+import { ViewVehicleComponent } from './view-vehicle/view-vehicle.component';
 import { MemberEditResolver } from "./_resolvers/member-edit.resolver";
 import { MemberDetailResolver } from "./_resolvers/member-detail.resolver";
 import { AuthGuard } from "./_guards/auth.guard";
@@ -12,6 +13,8 @@ import { MemberEditComponent } from "./members/member-edit/member-edit.component
 import { PreventUnsavedChanges } from "./_guards/prevent-unsaved-changes.guards";
 import { ListsResolver } from "./_resolvers/lists.resolver";
 import { MessagesResolver } from "./_resolvers/message.resolver";
+import { VehicleFormComponent } from "./vehicle-form/vehicle-form.component";
+import { VehicleListComponent } from "./vehicle-list/vehicle-list.component";
 
 
 
@@ -37,11 +40,19 @@ import { MessagesResolver } from "./_resolvers/message.resolver";
 export const appRoutes: Routes = [
   { path: "home", component: HomeComponent },
 
+  
+  
   {
     path: "",
     runGuardsAndResolvers: "always",
     canActivate: [AuthGuard],
     children: [
+      { path: 'vehicles/new', component: VehicleFormComponent },
+      { path: 'vehicles/edit/:id', component: VehicleFormComponent },
+      { path: 'vehicles/:id', component: ViewVehicleComponent },
+      { path: 'vehicles', component: VehicleListComponent },
+
+
       {
         path: "members",
         component: MemberListComponent,
@@ -63,5 +74,9 @@ export const appRoutes: Routes = [
     ]
   },
 
-  { path: "**", redirectTo: "home", pathMatch: "full" }
+  
+
+  { path: "**", redirectTo: "vehicles", pathMatch: "full" }
+
+  //{ path: "**", redirectTo: "home", pathMatch: "full" }
 ];

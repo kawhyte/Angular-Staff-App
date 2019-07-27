@@ -19,8 +19,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.AspNetCore.Mvc;
-
 
 namespace DTG.API
 {
@@ -42,17 +40,19 @@ namespace DTG.API
                .GetConnectionString("DefaultConnection"))
                .ConfigureWarnings(warnings => warnings.Ignore(CoreEventId.IncludeIgnoredWarning))
                );
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1).AddJsonOptions(opt =>
-           {
-               opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
-           });
+
             services.AddMvc();
             services.AddTransient<Seed>();
             services.AddCors();
             services.Configure<CloudinarySettings>(Configuration.GetSection("CloudinarySettings"));
             services.AddAutoMapper();
+            services.AddScoped<IVehicleRepository, VehicleRepository>();
+            services.AddTransient<IVehiclePhotoRepository, VehiclePhotoRepository>();
+            services.AddTransient<IBidRepository, BidRepository>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IAuthRepository, AuthRepository>();
-            services.AddScoped<IDatingRepository, DatingRepository>();
+            services.AddScoped<IBuyerSellerRepository, BuyerSellerRepository>();
+       
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
             {
                 options.TokenValidationParameters = new TokenValidationParameters
@@ -64,7 +64,10 @@ namespace DTG.API
                 };
 
             });
-            
+            services.AddMvc().AddJsonOptions(opt =>
+           {
+               opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+           });
 
            services.AddScoped<LogUserActivity>();
         }
@@ -96,7 +99,7 @@ namespace DTG.API
                 });
 
             }
-           //seeder.SeedUsers();
+            //seeder.SeedUsers();
             app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin().AllowCredentials());
             app.UseAuthentication();
             app.UseMvc();

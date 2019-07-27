@@ -8,11 +8,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DTG.API.Data
 {
-    public class DatingRepository : IDatingRepository
+    public class BuyerSellerRepository : IBuyerSellerRepository
     {
         private readonly DataContext _context;
 
-        public DatingRepository(DataContext context)
+        public BuyerSellerRepository(DataContext context)
         {
             _context = context;
 
@@ -29,7 +29,7 @@ namespace DTG.API.Data
 
 
 
-        public async Task<Photo> GetPhoto(int id)
+        public async Task<MemberPhoto> GetPhoto(int id)
         {
 
             var photo = await _context.Photos.FirstOrDefaultAsync(p => p.Id == id);
@@ -49,7 +49,7 @@ namespace DTG.API.Data
                 .OrderByDescending(u => u.LastActive).AsQueryable();
 
             users = users.Where(u => u.Id != userParams.UserId);
-             users = users.Where(u => u.Gender == userParams.Gender);
+             //users = users.Where(u => u.Gender == userParams.Gender);
 
             if (userParams.Likers)
             {
@@ -89,7 +89,7 @@ namespace DTG.API.Data
             return await _context.SaveChangesAsync() > 0;
         }
 
-        public async Task<Photo> GetMainPhotoForUser(int userId)
+        public async Task<MemberPhoto> GetMainPhotoForUser(int userId)
         {
             return await _context.Photos.Where(u => u.UserId == userId).FirstOrDefaultAsync(p => p.IsMain);
         }

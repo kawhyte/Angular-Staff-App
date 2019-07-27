@@ -1,0 +1,101 @@
+article {
+  display: grid;
+  grid-template-columns: 
+    [full-start] minmax(1em, 1fr) 
+    [main-start] minmax(0, 96em) [main-end]
+    minmax(1em, 1fr) [full-end];
+  grid-gap: 1em;
+}
+
+section {
+  grid-column: main;
+}
+
+figure {
+  grid-column: full;
+}
+
+
+body {
+  padding: 2em 0;
+}
+
+article > * {
+  background-color: #eaeaea;
+  padding: 2em;
+}
+
+figure {
+  text-align: center;
+}
+
+img {
+  max-width: 100%;
+}
+
+hr {
+    display: block;
+    position: relative;
+    padding: 0;
+    margin: 8px auto;
+    height: 0;
+    width: 100%;
+    max-height: 0;
+    font-size: 1px;
+    line-height: 0;
+    clear: both;
+    border: none;
+    border-top: 1px solid #aaaaaa;
+    border-bottom: 1px solid #ffffff;
+ }
+
+
+ .example-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.example-full-width {
+  width: 70%;
+}
+
+
+.signinButton {
+background-color: #9d65ff;
+color: white;;
+border-radius: 12px;
+}
+
+.signinButton:hover {
+background-color: #9d64ff;
+color: white;
+}
+.cancelButton {
+background-color: #ff425b;
+color: #ffffff;
+border-radius: 12px;
+}
+.cancelButton:hover {
+background-color: #fc6a7e;
+color: white;
+}
+
+.title {
+width: 100%;
+float: left;
+line-height: 46px;
+font-size: 34px;
+font-weight: 700;
+letter-spacing: 2px;
+color: #673ab7;
+position: relative;
+}
+
+.mat-radio-inner-circle {
+background-color: yellow;
+}
+
+.mat-radio-checked .mat-radio-outer-circle {
+border-color: lime;
+}

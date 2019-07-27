@@ -20,7 +20,7 @@
   <mat-divider></mat-divider>
   <mat-card-actions fxLayout="row" fxLayoutAlign="space-around center">
 
-    <span matTooltip="Employee Profile">
+    <span matTooltip="View Profile">
       <mat-list-item role="listitem" [routerLink]="['/members/', user.id]">
         <mat-icon mat-list-icon>person_pin</mat-icon>
       </mat-list-item>
@@ -32,7 +32,7 @@
       </mat-list-item>
     </span>
    
-    <span matTooltip="Private Messages">
+    <span matTooltip="Send a Messages">
       <mat-list-item role="listitem" [routerLink]="['/members/', user.id]" [queryParams]="{tab :'3'}">
         <mat-icon mat-list-icon>mail</mat-icon>
       </mat-list-item>

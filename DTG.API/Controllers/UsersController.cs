@@ -17,9 +17,9 @@ namespace DTG.API.Controllers
     [Route("api/[controller]")]
     public class UsersController : Controller
     {
-        private readonly IDatingRepository _repo;
+        private readonly IBuyerSellerRepository _repo;
         private readonly IMapper _mapper;
-        public UsersController(IDatingRepository repo, IMapper mapper)
+        public UsersController(IBuyerSellerRepository repo, IMapper mapper)
         {
             _mapper = mapper;
             _repo = repo;
@@ -38,7 +38,7 @@ namespace DTG.API.Controllers
             if (string.IsNullOrEmpty(userParams.Gender))
             {
 
-                userParams.Gender = userFromRepo.Gender == "male" ? "female" : "male";
+               // userParams.Gender = userFromRepo.Gender == "male" ? "female" : "male";
             }
 
 

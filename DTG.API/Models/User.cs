@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 
 namespace DTG.API.Models
 {
+   // User Buyer and Sellers
     public class User
     {
         public int Id { get; set; }
@@ -31,7 +32,8 @@ namespace DTG.API.Models
         public string Extension { get; set; }
         public string Cellular { get; set; }
 
-        public ICollection<Photo> Photos { get; set; }
+        public ICollection<MemberPhoto> Photos { get; set; }
+       // public ICollection<Vehicle> Vehicles { get; set; }
         public ICollection<Contact> Contact { get; set; }
         public ICollection<Like> Liker { get; set; }
         public ICollection<Like> Likee { get; set; }
@@ -40,7 +42,8 @@ namespace DTG.API.Models
         public ICollection<Message> MessagesReceived { get; set; }
         public User()
         {
-            Photos = new Collection<Photo>();
+            //Vehicles = new Collection<Vehicle>();
+            Photos = new Collection<MemberPhoto>();
             Contact = new Collection <Contact>();
         }
     }

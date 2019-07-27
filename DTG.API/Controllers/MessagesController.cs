@@ -17,9 +17,9 @@ namespace DTG.API.Controllers
     [Route("api/users/{userId}/[controller]")]
     public class MessagesController : Controller
     {
-        private readonly IDatingRepository _repo;
+        private readonly IBuyerSellerRepository _repo;
         private readonly IMapper _mapper;
-        public MessagesController(IDatingRepository repo, IMapper mapper)
+        public MessagesController(IBuyerSellerRepository repo, IMapper mapper)
         {
             _mapper = mapper;
             _repo = repo;

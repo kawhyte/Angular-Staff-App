@@ -10,22 +10,34 @@
     </mat-toolbar>
 
     <mat-nav-list role="list" >
-      <mat-list-item role="listitem" [routerLink]="['/members']">
+     
+
+      <mat-list-item role="listitem" [routerLink]="['/vehicles/new']">
+        <mat-icon mat-list-icon>add</mat-icon>  
+       <h4 mat-line>Add a listing </h4>
+      </mat-list-item>
+
+      <mat-list-item role="listitem" [routerLink]="['/vehicles']">
         <mat-icon mat-list-icon>people</mat-icon>  
-       <h4 mat-line>Employees</h4>
+       <h4 mat-line>View projects </h4>
       </mat-list-item>
 
       <mat-list-item role="listitem" [routerLink]="['/list']">
-        <mat-icon mat-list-icon>group_add</mat-icon>  
-       <h4 mat-line>Favorites</h4>
+        <mat-icon mat-list-icon>favorite</mat-icon>  
+       <h4 mat-line>My Favorites</h4>
       </mat-list-item>
 
       <mat-list-item role="listitem" [routerLink]="['/messages']">
         <mat-icon mat-list-icon>mail_outline</mat-icon>  
-       <h4 mat-line>Mail</h4>
+       <h4 mat-line>Conversations</h4>
       </mat-list-item>
 
       <!-- <mat-divider></mat-divider> -->
+
+      <mat-list-item role="listitem" [routerLink]="['/members']">
+        <mat-icon mat-list-icon>people</mat-icon>  
+       <h4 mat-line>Community</h4>
+      </mat-list-item>
 
     </mat-nav-list>
 

@@ -2,12 +2,14 @@ import { Component, OnInit, Input } from "@angular/core";
 import { User } from "../../_models/User";
 import { UserService } from "../../_services/User.service";
 import { AlertifyService } from "../../_services/alertify.service";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { NgxGalleryOptions, NgxGalleryAnimation } from "ngx-gallery";
 import { NgxGalleryImage } from "ngx-gallery";
 import { TabsetComponent } from "ngx-bootstrap";
 import { ViewChild } from "@angular/core";
 import { Contact } from "../../_models/Contact";
+import { AuthService } from "../../_services/auth.service";
+import { MatSnackBarRef, SimpleSnackBar, MatSnackBar } from "@angular/material";
 
 
 @Component({
@@ -26,9 +28,12 @@ export class MemberDetailComponent implements OnInit {
   galleryImages: NgxGalleryImage[];
 
   constructor(
+    private authService: AuthService,
     private userService: UserService,
     private alertify: AlertifyService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private snackBar: MatSnackBar,
+    private router: Router
   ) {
 
     //this.messages = [];
@@ -95,4 +100,42 @@ export class MemberDetailComponent implements OnInit {
   //     }
   //   );
   // }
+
+
+  sendLike(id: number) {
+    this.userService
+      .sendLike(this.authService.decodedToken.nameid, id)
+      .subscribe(
+        data => {
+          this.openSnackBar(
+            this.user.knownAs + " photo added to you favorite",
+            "Navigate to your favorite list"
+          )
+            .onAction()
+            .subscribe(() => {
+              this.router.navigate(["/list"]);
+            });
+          //this.alertify.success('You have liked ' + this.user.knownAs);
+        },
+        error => {
+          this.openSnackBar(
+            this.user.knownAs + " was already added to you favorite",
+            "Navigate to your favorite list"
+          );
+          //  .onAction().subscribe(() => {
+          // this.router.navigate(['/list'])},
+        }
+      );
+  }
+
+
+  openSnackBar(
+    message: string,
+    action: string
+  ): MatSnackBarRef<SimpleSnackBar> {
+    return this.snackBar.open(message, action, {
+      duration: 5000
+    });
+  }
+
 }

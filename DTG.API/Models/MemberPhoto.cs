@@ -2,7 +2,7 @@ using System;
 
 namespace DTG.API.Models
 {
-    public class Photo
+    public class MemberPhoto
     {
         public int Id { get; set; }
         public string Url { get; set; }

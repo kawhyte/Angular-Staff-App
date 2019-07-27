@@ -6,20 +6,33 @@ namespace DTG.API.Data
 {
     public class DataContext : DbContext
     {
+     
+        public DbSet<Value> Values { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<MemberPhoto> Photos { get; set; }
+        public DbSet<Contact> Contact { get; set; }
+        public DbSet<Like> Likes { get; set; }
+        public DbSet<Message> Messages { get; set; }
+        public DbSet<Make> Makes { get; set; }
+        public DbSet<Model> Models { get; set; }
+        public DbSet<Feature> Features { get; set; }
+        public DbSet <Vehicle> Vehicles { get; set; }
+        public DbSet <Bids> Bids { get; set; }
+        public DbSet <VehiclePhoto> VehiclePhoto { get; set; }
+
         public DataContext(DbContextOptions<DataContext> options)
             : base(options)
         {
 
         }
-        public DbSet<Value> Values { get; set; }
-        public DbSet<User> Users { get; set; }
-        public DbSet<Photo> Photos { get; set; }
-        public DbSet<Contact> Contact { get; set; }
-        public DbSet<Like> Likes { get; set; }
-        public DbSet<Message> Messages { get; set; }
-
+        
+        // Fluent API Config
         protected override void OnModelCreating(ModelBuilder builder)
         {
+
+            builder.Entity<VehicleFeature>().HasKey(vf => 
+              new { vf.VehicleId, vf.FeatureId });
+
             builder.Entity<Like>()
             .HasKey(k => new { k.LikerId, k.LikeeId });
 

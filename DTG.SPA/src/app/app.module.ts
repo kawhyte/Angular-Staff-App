@@ -1,3 +1,6 @@
+import { BidService } from './_services/bid.service';
+import { PhotoService } from './_services/photo.service';
+import { VehicleService } from './_services/vehicle.service';
 import { ErrorInterceptor } from "./_services/error.interceptor";
 import { MemberMessagesComponent } from "./members/member-messages/member-messages.component";
 import { ListsResolver } from "./_resolvers/lists.resolver";
@@ -41,6 +44,11 @@ import { FlexLayoutModule } from "@angular/flex-layout";
 import { MainmanagerComponent } from "./mainmanager/mainmanager.component";
 import { SignInDialogComponent } from "./sign-in-dialog/sign-in-dialog.component";
 import { RegisterDialogComponent } from './register-dialog/register-dialog.component';
+import { VehicleFormComponent } from './vehicle-form/vehicle-form.component';
+import { VehicleListComponent } from './vehicle-list/vehicle-list.component';
+import { PaginationsComponent } from './paginations/paginations.component';
+import { ViewVehicleComponent } from './view-vehicle/view-vehicle.component';
+
 
 @NgModule({
   declarations: [
@@ -59,7 +67,11 @@ import { RegisterDialogComponent } from './register-dialog/register-dialog.compo
     MemberMessagesComponent,
     MainmanagerComponent,
     SignInDialogComponent,
-    RegisterDialogComponent
+    RegisterDialogComponent,
+    VehicleFormComponent,
+    VehicleListComponent,
+    PaginationsComponent,
+    ViewVehicleComponent
 ],
   imports: [
     BrowserModule,
@@ -99,7 +111,10 @@ import { RegisterDialogComponent } from './register-dialog/register-dialog.compo
     PreventUnsavedChanges,
     ListsResolver,
     MessagesResolver,
-    ErrorInterceptor
+    ErrorInterceptor,
+    VehicleService,
+    PhotoService,
+    BidService
   ],
   bootstrap: [AppComponent],
 

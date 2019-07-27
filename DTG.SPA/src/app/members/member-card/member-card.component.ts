@@ -52,7 +52,7 @@ export class MemberCardComponent implements OnInit {
         },
         error => {
           this.openSnackBar(
-            this.user.knownAs + " was alredy added to you favorite",
+            this.user.knownAs + " was already added to you favorite",
             "Navigate to your favorite list"
           );
           //  .onAction().subscribe(() => {

@@ -1,0 +1,70 @@
+
+<article>
+    <section>
+        <h1>Vehicle</h1>
+   <!--    <p>
+        {{ vehicle | json }}
+      </p> -->
+<form #f="ngForm" (ngSubmit)= "submit()" novalidate *ngIf="vehicle">
+<div>
+
+  <mat-tab-group>
+<mat-tab label="Basic">
+  <h2>Basics</h2>
+  <ul>
+    <li>Make: {{ vehicle.make.name }}</li>
+    <li>Model: {{ vehicle.model.name }}</li>
+    <li>Registered: {{ vehicle.isRegistered ? 'Yes' : 'No' }}
+  </ul>
+  <mat-divider> </mat-divider>
+  <h2>Features</h2>
+  <ul>
+    <li *ngFor="let f of vehicle.features">{{f.name }}</li>
+  </ul>
+  <!-- <h2>Contact</h2>
+  <ul>
+    <li>Contact Name: {{ vehicle.contact.name }}</li>
+    <li>Contact Phone: {{ vehicle.contact.phone }}</li>
+    <li>Contact Email: {{ vehicle.contact.email }}</li>
+  </ul> -->
+  <mat-divider> </mat-divider>
+  <h4 *ngIf="vehicle.projectBudget">Bidding Details</h4>
+  <ul>
+    <li>Starting Bid: {{ vehicle.projectBudget | currency :'USD':'3.-22'}}</li>
+    <li>Current Bid: {{ vehicle.lowestProjectBid | currency :'USD':'3.-22' }}</li>
+    <li>The Bidding Started {{vehicle.projectStartDate | timeAgo}} (Bidding will last for two days)</li>
+    <li *ngIf="isBiddingDone"> Bidding will last for two days </li>
+    <!-- <li> Bid leader/winner is : {{vehicle.contact.name}}</li> -->
+    <!-- {{vehicle.projectEndDate | date }}(all biiding ends two days) -->
+
+  </ul>
+<mat-divider> </mat-divider>
+<p></p>
+  <p>
+    <!-- <a class="btn btn-primary" (click)= "postbid()">Make a Bid</a> -->
+    <a class="btn btn-primary" [routerLink]="['/vehicles/edit/', vehicle.id]"> Bid on this Project</a>
+    <!-- <button class="btn btn-danger" (click)="delete()">Delete</button> -->
+    <a class="btn btn-default" [routerLink]="['/vehicles']">View More Projects</a>
+
+    <!-- <img *ngFor="let bid of bids" src="{{ bids.bidvalue }}" > -->
+    
+  </p>
+
+</mat-tab>
+
+<mat-tab label="Photo">
+
+  <input type="file" (change)= "uploadPhoto()" #fileInput> 
+  <img *ngFor="let photo of photos" src="/uploads/{{ photo.fileName }}" class="img-thumbnail">
+</mat-tab>
+
+  </mat-tab-group>
+
+</div>
+</form>
+</section>
+    <p> All <p>
+
+  </article>
+
+
