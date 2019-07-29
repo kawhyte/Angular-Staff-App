@@ -35,12 +35,14 @@ namespace DTG.API
         public void ConfigureServices(IServiceCollection services)
         {
             var key = Encoding.ASCII.GetBytes(Configuration.GetSection("AppSettings:Token").Value);
-
-            services.AddDbContext<DataContext>(x => x.UseSqlite(Configuration
+            //services.AddDbContext<DataContext>(x => x.UseSqlite(Configuration
+            //.GetConnectionString("DefaultConnection"))
+            services.AddDbContext<DataContext>(x => x.UseSqlServer(Configuration
                .GetConnectionString("DefaultConnection"))
                .ConfigureWarnings(warnings => warnings.Ignore(CoreEventId.IncludeIgnoredWarning))
                );
 
+            services.BuildServiceProvider().GetService<DataContext>().Database.Migrate();
             services.AddMvc();
             services.AddTransient<Seed>();
             services.AddCors();

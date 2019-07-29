@@ -11,14 +11,15 @@ using System;
 namespace DTG.API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20180708174129_AddBidTable")]
-    partial class AddBidTable
+    [Migration("20190729180111_azureMigration")]
+    partial class azureMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.0.1-rtm-125");
+                .HasAnnotation("ProductVersion", "2.0.1-rtm-125")
+                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("DTG.API.Models.Bids", b =>
                 {
@@ -103,6 +104,30 @@ namespace DTG.API.Migrations
                     b.ToTable("Makes");
                 });
 
+            modelBuilder.Entity("DTG.API.Models.MemberPhoto", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("DateAdded");
+
+                    b.Property<string>("Description");
+
+                    b.Property<bool>("IsMain");
+
+                    b.Property<string>("PublicId");
+
+                    b.Property<string>("Url");
+
+                    b.Property<int>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Photos");
+                });
+
             modelBuilder.Entity("DTG.API.Models.Message", b =>
                 {
                     b.Property<int>("Id")
@@ -149,30 +174,6 @@ namespace DTG.API.Migrations
                     b.HasIndex("MakeId");
 
                     b.ToTable("Models");
-                });
-
-            modelBuilder.Entity("DTG.API.Models.Photo", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<DateTime>("DateAdded");
-
-                    b.Property<string>("Description");
-
-                    b.Property<bool>("IsMain");
-
-                    b.Property<string>("PublicId");
-
-                    b.Property<string>("Url");
-
-                    b.Property<int>("UserId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Photos");
                 });
 
             modelBuilder.Entity("DTG.API.Models.User", b =>
@@ -263,6 +264,8 @@ namespace DTG.API.Migrations
 
                     b.Property<DateTime>("LastUpdate");
 
+                    b.Property<decimal>("LowestProjectBid");
+
                     b.Property<int>("ModelId");
 
                     b.Property<decimal>("ProjectBudget");
@@ -289,6 +292,24 @@ namespace DTG.API.Migrations
                     b.HasIndex("FeatureId");
 
                     b.ToTable("VehicleFeatures");
+                });
+
+            modelBuilder.Entity("DTG.API.Models.VehiclePhoto", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("FileName")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<int>("VehicleId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("VehicleId");
+
+                    b.ToTable("VehiclePhotos");
                 });
 
             modelBuilder.Entity("DTG.API.Models.Bids", b =>
@@ -319,6 +340,14 @@ namespace DTG.API.Migrations
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
+            modelBuilder.Entity("DTG.API.Models.MemberPhoto", b =>
+                {
+                    b.HasOne("DTG.API.Models.User", "User")
+                        .WithMany("Photos")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("DTG.API.Models.Message", b =>
                 {
                     b.HasOne("DTG.API.Models.User", "Recipient")
@@ -340,14 +369,6 @@ namespace DTG.API.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("DTG.API.Models.Photo", b =>
-                {
-                    b.HasOne("DTG.API.Models.User", "User")
-                        .WithMany("Photos")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
             modelBuilder.Entity("DTG.API.Models.Vehicle", b =>
                 {
                     b.HasOne("DTG.API.Models.Model", "Model")
@@ -365,6 +386,14 @@ namespace DTG.API.Migrations
 
                     b.HasOne("DTG.API.Models.Vehicle", "Vehicle")
                         .WithMany("Features")
+                        .HasForeignKey("VehicleId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("DTG.API.Models.VehiclePhoto", b =>
+                {
+                    b.HasOne("DTG.API.Models.Vehicle")
+                        .WithMany("VehiclePhotos")
                         .HasForeignKey("VehicleId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

@@ -17,7 +17,8 @@ namespace DTG.API.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.0.1-rtm-125");
+                .HasAnnotation("ProductVersion", "2.0.1-rtm-125")
+                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("DTG.API.Models.Bids", b =>
                 {
@@ -313,7 +314,7 @@ namespace DTG.API.Migrations
             modelBuilder.Entity("DTG.API.Models.Bids", b =>
                 {
                     b.HasOne("DTG.API.Models.Vehicle", "Vehicle")
-                        .WithMany()
+                        .WithMany("Bids")
                         .HasForeignKey("VehicleId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
