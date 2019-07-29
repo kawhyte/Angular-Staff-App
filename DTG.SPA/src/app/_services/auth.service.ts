@@ -12,7 +12,7 @@ import { environment } from '../../environments/environment';
 
 @Injectable()
 export class AuthService {
-  baseUrl = "http://localhost:5000/api/auth/";
+  baseUrl = environment.apiUrl + 'auth/'//"http://localhost:5000/api/auth/";
   userToken: any;
   decodedToken: any;
   currentUser: User;

@@ -23,7 +23,7 @@ import { AppComponent } from "./app.component";
 import { NavComponent } from "./nav/nav.component";
 import { HomeComponent } from "./home/home.component";
 import { RegisterComponent } from "./register/register.component";
-import { BsDropdownModule, TabsModule, ButtonsModule } from "ngx-bootstrap";
+import { BsDropdownModule, TabsModule, ButtonsModule, PaginationModule } from "ngx-bootstrap";
 import { MemberListComponent } from "./members/member-list/member-list.component";
 import { ListComponent } from "./list/list.component";
 import { MessagesComponent } from "./messages/messages.component";
@@ -33,8 +33,8 @@ import { MemberEditResolver } from "./_resolvers/member-edit.resolver";
 import { PreventUnsavedChanges } from "./_guards/prevent-unsaved-changes.guards";
 import { FileUploadModule } from "ng2-file-upload";
 //import { BsDatepickerModule } from "ngx-bootstrap/datepicker";
-import { TimeAgoPipe } from "time-ago-pipe";
-import { PaginationModule } from "ngx-bootstrap/pagination/pagination.module";
+import { TimeAgoPipe } from  "time-ago-pipe"
+//import { PaginationModule } from "ngx-bootstrap/pagination/pagination.module";
 import { MessagesResolver } from "./_resolvers/message.resolver";
 import { JwtModule } from "@auth0/angular-jwt";
 import { HttpClientModule } from "@angular/common/http";
@@ -49,6 +49,10 @@ import { VehicleListComponent } from './vehicle-list/vehicle-list.component';
 import { PaginationsComponent } from './paginations/paginations.component';
 import { ViewVehicleComponent } from './view-vehicle/view-vehicle.component';
 
+
+export function tokenGetter() {
+  return localStorage.getItem('token');
+}
 
 @NgModule({
   declarations: [
@@ -93,10 +97,8 @@ import { ViewVehicleComponent } from './view-vehicle/view-vehicle.component';
     HttpClientModule,
     JwtModule.forRoot({
       config: {
-        tokenGetter: () => {
-          return localStorage.getItem("token");
-        },
-        whitelistedDomains: ["localhost:5000"]
+        tokenGetter: tokenGetter,
+        whitelistedDomains: ['localhost:5000']
       }
     })
   ],

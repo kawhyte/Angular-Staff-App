@@ -579,6 +579,7 @@ var AlertifyService = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_BehaviorSubject__ = __webpack_require__("../../../../rxjs/_esm5/BehaviorSubject.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__auth0_angular_jwt__ = __webpack_require__("../../../../@auth0/angular-jwt/index.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__angular_common_http__ = __webpack_require__("../../../common/esm5/http.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__environments_environment__ = __webpack_require__("../../../../../src/environments/environment.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -595,11 +596,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var AuthService = /** @class */ (function () {
     function AuthService(http, jwtHelperService) {
         this.http = http;
         this.jwtHelperService = jwtHelperService;
-        this.baseUrl = "http://localhost:5000/api/auth/";
+        this.baseUrl = __WEBPACK_IMPORTED_MODULE_7__environments_environment__["a" /* environment */].apiUrl + 'auth/'; //"http://localhost:5000/api/auth/";
         this.photoUrl = new __WEBPACK_IMPORTED_MODULE_4_rxjs_BehaviorSubject__["a" /* BehaviorSubject */]('../../assets/user.png');
         this.currentPhotUrl = this.photoUrl.asObservable();
     }
@@ -660,6 +662,7 @@ var AuthService = /** @class */ (function () {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return BidService; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__("../../../http/esm5/http.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__environments_environment__ = __webpack_require__("../../../../../src/environments/environment.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -671,9 +674,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
+
 var BidService = /** @class */ (function () {
     function BidService(http) {
         this.http = http;
+        this.baseUrl = __WEBPACK_IMPORTED_MODULE_2__environments_environment__["a" /* environment */].apiUrl + '/vehicles/';
     }
     /*     upload(vehicleId, photo) {
           var formData = new FormData();
@@ -684,11 +689,11 @@ var BidService = /** @class */ (function () {
     BidService.prototype.create = function (vehicleId, bid) {
         console.log("create -bid", vehicleId.id);
         console.log(bid.bidvalue);
-        return this.http.post('http://localhost:5000/api/vehicles/' + vehicleId.id + "/bids", bid)
+        return this.http.post(this.baseUrl + vehicleId.id + "/bids", bid)
             .map(function (res) { return res.json(); });
     };
     BidService.prototype.getBids = function (vehicleId) {
-        return this.http.get('http://localhost:5000/api/vehicles/' + vehicleId + "/bids")
+        return this.http.get(this.baseUrl + vehicleId + "/bids")
             .map(function (res) { return res.json(); });
     };
     BidService = __decorate([
@@ -960,6 +965,7 @@ var AppComponent = /** @class */ (function () {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* unused harmony export tokenGetter */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__services_bid_service__ = __webpack_require__("../../../../../src/app/_services/bid.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_photo_service__ = __webpack_require__("../../../../../src/app/_services/photo.service.ts");
@@ -997,22 +1003,20 @@ var AppComponent = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_32__guards_prevent_unsaved_changes_guards__ = __webpack_require__("../../../../../src/app/_guards/prevent-unsaved-changes.guards.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_33_ng2_file_upload__ = __webpack_require__("../../../../ng2-file-upload/index.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_33_ng2_file_upload___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_33_ng2_file_upload__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_34_time_ago_pipe__ = __webpack_require__("../../../../time-ago-pipe/time-ago-pipe.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_34_time_ago_pipe___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_34_time_ago_pipe__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_35_ngx_bootstrap_pagination_pagination_module__ = __webpack_require__("../../../../ngx-bootstrap/pagination/pagination.module.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_36__resolvers_message_resolver__ = __webpack_require__("../../../../../src/app/_resolvers/message.resolver.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_37__auth0_angular_jwt__ = __webpack_require__("../../../../@auth0/angular-jwt/index.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_38__angular_common_http__ = __webpack_require__("../../../common/esm5/http.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_39__angular_platform_browser_animations__ = __webpack_require__("../../../platform-browser/esm5/animations.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_40__material_module__ = __webpack_require__("../../../../../src/app/material.module.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_41__angular_flex_layout__ = __webpack_require__("../../../flex-layout/esm5/flex-layout.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_42__mainmanager_mainmanager_component__ = __webpack_require__("../../../../../src/app/mainmanager/mainmanager.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_43__sign_in_dialog_sign_in_dialog_component__ = __webpack_require__("../../../../../src/app/sign-in-dialog/sign-in-dialog.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_44__register_dialog_register_dialog_component__ = __webpack_require__("../../../../../src/app/register-dialog/register-dialog.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_45__vehicle_form_vehicle_form_component__ = __webpack_require__("../../../../../src/app/vehicle-form/vehicle-form.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_46__vehicle_list_vehicle_list_component__ = __webpack_require__("../../../../../src/app/vehicle-list/vehicle-list.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_47__paginations_paginations_component__ = __webpack_require__("../../../../../src/app/paginations/paginations.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_48__view_vehicle_view_vehicle_component__ = __webpack_require__("../../../../../src/app/view-vehicle/view-vehicle.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_34_time_ago_pipe__ = __webpack_require__("../../../../time-ago-pipe/esm5/time-ago-pipe.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_35__resolvers_message_resolver__ = __webpack_require__("../../../../../src/app/_resolvers/message.resolver.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_36__auth0_angular_jwt__ = __webpack_require__("../../../../@auth0/angular-jwt/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_37__angular_common_http__ = __webpack_require__("../../../common/esm5/http.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_38__angular_platform_browser_animations__ = __webpack_require__("../../../platform-browser/esm5/animations.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_39__material_module__ = __webpack_require__("../../../../../src/app/material.module.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_40__angular_flex_layout__ = __webpack_require__("../../../flex-layout/esm5/flex-layout.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_41__mainmanager_mainmanager_component__ = __webpack_require__("../../../../../src/app/mainmanager/mainmanager.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_42__sign_in_dialog_sign_in_dialog_component__ = __webpack_require__("../../../../../src/app/sign-in-dialog/sign-in-dialog.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_43__register_dialog_register_dialog_component__ = __webpack_require__("../../../../../src/app/register-dialog/register-dialog.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_44__vehicle_form_vehicle_form_component__ = __webpack_require__("../../../../../src/app/vehicle-form/vehicle-form.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_45__vehicle_list_vehicle_list_component__ = __webpack_require__("../../../../../src/app/vehicle-list/vehicle-list.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_46__paginations_paginations_component__ = __webpack_require__("../../../../../src/app/paginations/paginations.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_47__view_vehicle_view_vehicle_component__ = __webpack_require__("../../../../../src/app/view-vehicle/view-vehicle.component.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1055,6 +1059,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 //import { BsDatepickerModule } from "ngx-bootstrap/datepicker";
 
+//import { PaginationModule } from "ngx-bootstrap/pagination/pagination.module";
 
 
 
@@ -1068,7 +1073,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-
+function tokenGetter() {
+    return localStorage.getItem('token');
+}
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
@@ -1086,15 +1093,15 @@ var AppModule = /** @class */ (function () {
                 __WEBPACK_IMPORTED_MODULE_11__members_member_detail_member_detail_component__["a" /* MemberDetailComponent */],
                 __WEBPACK_IMPORTED_MODULE_7__members_member_edit_member_edit_component__["a" /* MemberEditComponent */],
                 __WEBPACK_IMPORTED_MODULE_6__members_photo_editor_photo_editor_component__["a" /* PhotoEditorComponent */],
-                __WEBPACK_IMPORTED_MODULE_34_time_ago_pipe__["TimeAgoPipe"],
+                __WEBPACK_IMPORTED_MODULE_34_time_ago_pipe__["a" /* TimeAgoPipe */],
                 __WEBPACK_IMPORTED_MODULE_4__members_member_messages_member_messages_component__["a" /* MemberMessagesComponent */],
-                __WEBPACK_IMPORTED_MODULE_42__mainmanager_mainmanager_component__["a" /* MainmanagerComponent */],
-                __WEBPACK_IMPORTED_MODULE_43__sign_in_dialog_sign_in_dialog_component__["a" /* SignInDialogComponent */],
-                __WEBPACK_IMPORTED_MODULE_44__register_dialog_register_dialog_component__["a" /* RegisterDialogComponent */],
-                __WEBPACK_IMPORTED_MODULE_45__vehicle_form_vehicle_form_component__["a" /* VehicleFormComponent */],
-                __WEBPACK_IMPORTED_MODULE_46__vehicle_list_vehicle_list_component__["a" /* VehicleListComponent */],
-                __WEBPACK_IMPORTED_MODULE_47__paginations_paginations_component__["a" /* PaginationsComponent */],
-                __WEBPACK_IMPORTED_MODULE_48__view_vehicle_view_vehicle_component__["a" /* ViewVehicleComponent */]
+                __WEBPACK_IMPORTED_MODULE_41__mainmanager_mainmanager_component__["a" /* MainmanagerComponent */],
+                __WEBPACK_IMPORTED_MODULE_42__sign_in_dialog_sign_in_dialog_component__["a" /* SignInDialogComponent */],
+                __WEBPACK_IMPORTED_MODULE_43__register_dialog_register_dialog_component__["a" /* RegisterDialogComponent */],
+                __WEBPACK_IMPORTED_MODULE_44__vehicle_form_vehicle_form_component__["a" /* VehicleFormComponent */],
+                __WEBPACK_IMPORTED_MODULE_45__vehicle_list_vehicle_list_component__["a" /* VehicleListComponent */],
+                __WEBPACK_IMPORTED_MODULE_46__paginations_paginations_component__["a" /* PaginationsComponent */],
+                __WEBPACK_IMPORTED_MODULE_47__view_vehicle_view_vehicle_component__["a" /* ViewVehicleComponent */]
             ],
             imports: [
                 __WEBPACK_IMPORTED_MODULE_17__angular_platform_browser__["BrowserModule"],
@@ -1102,23 +1109,21 @@ var AppModule = /** @class */ (function () {
                 __WEBPACK_IMPORTED_MODULE_20__angular_forms__["d" /* FormsModule */],
                 __WEBPACK_IMPORTED_MODULE_25_ngx_bootstrap__["a" /* BsDropdownModule */].forRoot(),
                 __WEBPACK_IMPORTED_MODULE_29__angular_router__["c" /* RouterModule */].forRoot(__WEBPACK_IMPORTED_MODULE_14__routes__["a" /* appRoutes */]),
-                __WEBPACK_IMPORTED_MODULE_25_ngx_bootstrap__["c" /* TabsModule */].forRoot(),
+                __WEBPACK_IMPORTED_MODULE_25_ngx_bootstrap__["d" /* TabsModule */].forRoot(),
                 __WEBPACK_IMPORTED_MODULE_8_ngx_gallery__["NgxGalleryModule"],
                 __WEBPACK_IMPORTED_MODULE_33_ng2_file_upload__["FileUploadModule"],
                 __WEBPACK_IMPORTED_MODULE_20__angular_forms__["i" /* ReactiveFormsModule */],
-                __WEBPACK_IMPORTED_MODULE_39__angular_platform_browser_animations__["a" /* BrowserAnimationsModule */],
-                __WEBPACK_IMPORTED_MODULE_40__material_module__["a" /* MaterialModule */],
+                __WEBPACK_IMPORTED_MODULE_38__angular_platform_browser_animations__["a" /* BrowserAnimationsModule */],
+                __WEBPACK_IMPORTED_MODULE_39__material_module__["a" /* MaterialModule */],
                 //BsDatepickerModule.forRoot(),
-                __WEBPACK_IMPORTED_MODULE_35_ngx_bootstrap_pagination_pagination_module__["a" /* PaginationModule */].forRoot(),
+                __WEBPACK_IMPORTED_MODULE_25_ngx_bootstrap__["c" /* PaginationModule */].forRoot(),
                 __WEBPACK_IMPORTED_MODULE_25_ngx_bootstrap__["b" /* ButtonsModule */].forRoot(),
-                __WEBPACK_IMPORTED_MODULE_41__angular_flex_layout__["a" /* FlexLayoutModule */],
-                __WEBPACK_IMPORTED_MODULE_38__angular_common_http__["c" /* HttpClientModule */],
-                __WEBPACK_IMPORTED_MODULE_37__auth0_angular_jwt__["b" /* JwtModule */].forRoot({
+                __WEBPACK_IMPORTED_MODULE_40__angular_flex_layout__["a" /* FlexLayoutModule */],
+                __WEBPACK_IMPORTED_MODULE_37__angular_common_http__["c" /* HttpClientModule */],
+                __WEBPACK_IMPORTED_MODULE_36__auth0_angular_jwt__["b" /* JwtModule */].forRoot({
                     config: {
-                        tokenGetter: function () {
-                            return localStorage.getItem("token");
-                        },
-                        whitelistedDomains: ["localhost:5000"]
+                        tokenGetter: tokenGetter,
+                        whitelistedDomains: ['localhost:5000']
                     }
                 })
             ],
@@ -1132,7 +1137,7 @@ var AppModule = /** @class */ (function () {
                 __WEBPACK_IMPORTED_MODULE_31__resolvers_member_edit_resolver__["a" /* MemberEditResolver */],
                 __WEBPACK_IMPORTED_MODULE_32__guards_prevent_unsaved_changes_guards__["a" /* PreventUnsavedChanges */],
                 __WEBPACK_IMPORTED_MODULE_5__resolvers_lists_resolver__["a" /* ListsResolver */],
-                __WEBPACK_IMPORTED_MODULE_36__resolvers_message_resolver__["a" /* MessagesResolver */],
+                __WEBPACK_IMPORTED_MODULE_35__resolvers_message_resolver__["a" /* MessagesResolver */],
                 __WEBPACK_IMPORTED_MODULE_3__services_error_interceptor__["a" /* ErrorInterceptor */],
                 __WEBPACK_IMPORTED_MODULE_2__services_vehicle_service__["a" /* VehicleService */],
                 __WEBPACK_IMPORTED_MODULE_1__services_photo_service__["a" /* PhotoService */],
@@ -1140,7 +1145,7 @@ var AppModule = /** @class */ (function () {
             ],
             bootstrap: [__WEBPACK_IMPORTED_MODULE_21__app_component__["a" /* AppComponent */]],
             entryComponents: [
-                __WEBPACK_IMPORTED_MODULE_43__sign_in_dialog_sign_in_dialog_component__["a" /* SignInDialogComponent */], __WEBPACK_IMPORTED_MODULE_44__register_dialog_register_dialog_component__["a" /* RegisterDialogComponent */]
+                __WEBPACK_IMPORTED_MODULE_42__sign_in_dialog_sign_in_dialog_component__["a" /* SignInDialogComponent */], __WEBPACK_IMPORTED_MODULE_43__register_dialog_register_dialog_component__["a" /* RegisterDialogComponent */]
             ]
         })
     ], AppModule);
@@ -1719,7 +1724,7 @@ var MemberDetailComponent = /** @class */ (function () {
     };
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewChild"])("memberTabs"),
-        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_5_ngx_bootstrap__["d" /* TabsetComponent */])
+        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_5_ngx_bootstrap__["e" /* TabsetComponent */])
     ], MemberDetailComponent.prototype, "memberTabs", void 0);
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
@@ -3498,13 +3503,9 @@ var ViewVehicleComponent = /** @class */ (function () {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return environment; });
-// The file contents for the current environment will overwrite these during build.
-// The build system defaults to the dev environment which uses `environment.ts`, but if you do
-// `ng build --env=prod` then `environment.prod.ts` will be used instead.
-// The list of which env maps to which file can be found in `.angular-cli.json`.
 var environment = {
-    production: false,
-    apiUrl: "http://localhost:5000/api/"
+    production: true,
+    apiUrl: 'api/'
 };
 
 
