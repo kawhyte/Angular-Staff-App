@@ -76,7 +76,7 @@ export const appRoutes: Routes = [
 
   
 
-  { path: "**", redirectTo: "vehicles", pathMatch: "full" }
+  { path: "**", redirectTo: "members", pathMatch: "full" }
 
   //{ path: "**", redirectTo: "home", pathMatch: "full" }
 ];

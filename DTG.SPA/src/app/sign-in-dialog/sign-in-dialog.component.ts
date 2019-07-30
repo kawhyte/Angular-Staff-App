@@ -49,7 +49,7 @@ export class SignInDialogComponent implements OnInit {
         //this.alertify.error("Incorrect credential provided"); 
       },
       () => {
-        this.router.navigate(["/vehicles"]);
+        this.router.navigate(["/members"]);
       }
     );
   }
