@@ -3,7 +3,7 @@ import { NgZone } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 
 
-const SMALL_WIDTH_BREAKPOINT = 720;
+const SMALL_WIDTH_BREAKPOINT = 120;
 @Component({
   selector: 'app-mainmanager',
   templateUrl: './mainmanager.component.html',
@@ -17,7 +17,7 @@ export class MainmanagerComponent implements OnInit {
   constructor( zone: NgZone, public authService: AuthService,) {
 
     this.mediaMatcher.addListener(mql => 
-      zone.run(() => this.mediaMatcher = mql));
+      zone.run(() => this.mediaMatcher = matchMedia(`(max-width: ${SMALL_WIDTH_BREAKPOINT}px)`)));
   }
 
   ngOnInit() {
